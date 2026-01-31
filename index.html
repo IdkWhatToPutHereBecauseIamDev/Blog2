@@ -6,58 +6,56 @@
     <title>The Meridian | Journal of Modern Intent</title>
     
     <link href="https://fonts.googleapis.com" rel="stylesheet">
+    
+    <!-- Core Ad Script -->
+    <script type="text/javascript" src="https://acp-pa.com"></script>
+
     <style>
         :root { --paper: #F9F8F3; --ink: #1D1D1D; --accent: #884C42; --border: #E0DDD5; }
         * { box-sizing: border-box; }
-        body { background-color: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; margin: 0; line-height: 1.8; }
+        body { background-color: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; margin: 0; line-height: 1.8; overflow-x: hidden; }
+        
         nav { padding: 1.5rem 5%; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--paper); position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; }
-        header { text-align: center; padding: 100px 20px; border-bottom: 4px double var(--ink); margin: 0 5%; }
+        
+        header { text-align: center; padding: 100px 20px; border-bottom: 4px double var(--ink); margin: 0 5% 50px 5%; }
         header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0; font-weight: 900; }
-        .container { max-width: 720px; margin: 0 auto; padding: 60px 20px; }
-        article { margin-bottom: 100px; animation: fadeInUp 0.8s ease-out; }
+
+        .container { max-width: 720px; margin: 0 auto; padding: 0 20px; min-height: 100vh; }
+        article { margin-bottom: 100px; min-height: 300px; animation: fadeInUp 0.6s ease-out; }
         .tag { color: var(--accent); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 15px; display: block; }
         h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; line-height: 1.1; margin: 10px 0 25px 0; }
-        .meta { font-size: 0.85rem; color: #777; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         
-        /* Ad Placement Styling */
-        .ad-container { 
-            background: #f0eee9; 
-            padding: 20px; 
-            border: 1px dashed var(--border);
-            min-height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .ad-label { position: absolute; top: -10px; left: 20px; background: var(--paper); padding: 0 10px; font-size: 0.6rem; letter-spacing: 1px; color: var(--dim); }
+        /* Ad Slot Style */
+        .ad-entry { border: 1px dashed var(--border); background: #f1efea; padding: 40px 20px; text-align: center; }
+        .ad-label { font-size: 0.6rem; letter-spacing: 2px; color: #999; margin-bottom: 20px; }
 
-        #sentinel { height: 100px; display: flex; align-items: center; justify-content: center; }
-        .spinner { width: 30px; height: 30px; border: 2px solid #ddd; border-top-color: var(--ink); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        #sentinel { height: 150px; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .spinner { width: 30px; height: 30px; border: 3px solid #ddd; border-top-color: var(--ink); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <nav>
     <div class="logo">Meridian.</div>
-    <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Archive Series</div>
+    <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase;">Archive Retrieval System</div>
 </nav>
 
 <header>
     <h1>The Archive.</h1>
-    <p>A persistent study of culture and technology.</p>
+    <p>A deep-feed retrieval of legacy documentation.</p>
 </header>
 
 <div class="container">
     <div id="posts-list">
+        <!-- Initial Content to ensure page height -->
         <article>
             <span class="tag">Philosophy</span>
             <h2>The Weight of Infinite Choice</h2>
-            <div class="meta">By Julian Vane | Jan 30, 2026</div>
-            <p>In a world of absolute data accessibility, the most radical act is limitation...</p>
+            <p>In a world of absolute data accessibility, the most radical act is limitation. We explore why the "unplugged" movement is gaining traction among those who build the very networks we seek to escape...</p>
         </article>
     </div>
 
@@ -66,61 +64,55 @@
     </div>
 </div>
 
-<!-- Load Ad Script Once Globally -->
-<script type="text/javascript" src="https://acp-pa.com"></script>
-
 <script>
     const list = document.getElementById('posts-list');
     const sentinel = document.getElementById('sentinel');
-    let postCounter = 0;
-    
-    function generateContent(isAd = false) {
+    let cycle = 0;
+
+    function injectContent() {
+        cycle++;
         const article = document.createElement('article');
-        
-        if (isAd) {
-            // Styled as an article but contains the Ad code
+
+        if (cycle % 3 === 0) {
+            // SPONSORED AD ARTICLE
+            article.className = "ad-entry";
             article.innerHTML = `
-                <span class="tag">Sponsored Content</span>
-                <div class="ad-container">
-                    <div class="ad-label">ADVERTISEMENT</div>
-                    <div id="ad-zone-${Date.now()}"></div>
-                </div>
+                <div class="ad-label">SPONSORED ARCHIVE DATA</div>
+                <div id="ad-zone-${Date.now()}"></div>
             `;
             list.appendChild(article);
             
-            // Execute the specific ad tag for this placement
+            // Execute the Ad Tag
             try {
                 aclib.runAutoTag({ zoneId: '0n5ys5u958' });
-            } catch(e) { console.log("Ad Blocked or Script Error"); }
-
+            } catch(e) { console.warn("Ad script bypass."); }
         } else {
-            // Normal Random Article
-            const subjects = ["Analog Living", "Minimalist Architecture", "Algorithm Culture"];
-            const sub = subjects[Math.floor(Math.random() * subjects.length)];
+            // REGULAR RANDOM ARTICLE
+            const topics = ["Digital Fatigue", "Urban Echoes", "Material Memory", "Silent Networks"];
+            const selected = topics[Math.floor(Math.random() * topics.length)];
             article.innerHTML = `
-                <span class="tag">Archive</span>
-                <h2>Notes on ${sub}</h2>
-                <div class="meta">Internal Archive Retrieval</div>
-                <p>The convergence of tradition and utility suggests a broader cultural fatigue regarding ${sub}...</p>
+                <span class="tag">System Retrieval</span>
+                <h2>Observations on ${selected}</h2>
+                <p>Retrieved from the 2024 ledger: The concept of ${selected} continues to challenge our understanding of modern density. We find that the more we optimize, the less we experience...</p>
+                <p style="color:#999; font-style:italic;">[Full decrypt available for authorized users]</p>
             `;
             list.appendChild(article);
         }
     }
 
+    // Initial Load of 3 posts so user can actually scroll
+    for(let i=0; i<3; i++) injectContent();
+
+    // Intersection Observer to trigger more
     const observer = new IntersectionObserver((entries) => {
-        if (entries.isIntersecting) {
+        if (entries[0].isIntersecting) {
+            // Add 2 more posts every time you hit bottom
             setTimeout(() => {
-                postCounter++;
-                // Every 3rd "post" is actually an ad
-                if (postCounter % 3 === 0) {
-                    generateContent(true); 
-                } else {
-                    generateContent(false);
-                    generateContent(false);
-                }
-            }, 500);
+                injectContent();
+                injectContent();
+            }, 400);
         }
-    }, { threshold: 1.0 });
+    }, { rootMargin: '100px' }); // Trigger 100px before the bottom for smoothness
 
     observer.observe(sentinel);
 </script>
