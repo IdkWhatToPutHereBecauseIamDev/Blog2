@@ -3,64 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Meridian | Archive</title>
+    <title>The Meridian | Journal of Modern Intent</title>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
         :root { --paper: #F9F8F3; --ink: #1D1D1D; --accent: #884C42; --border: #E0DDD5; }
-        body { background-color: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; margin: 0; line-height: 1.8; }
+        body { background-color: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; margin: 0; line-height: 1.8; overflow-x: hidden; }
         
-        /* Layout */
-        nav { padding: 1.5rem 5%; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; background: var(--paper); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; }
-        header { text-align: center; padding: 60px 20px; border-bottom: 4px double var(--ink); margin: 0 5% 50px 5%; }
-        header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; }
+        /* Blog Layout */
+        nav { padding: 1.5rem 5%; border-bottom: 1px solid var(--border); background: var(--paper); position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: -1px; }
+        header { text-align: center; padding: 100px 20px; border-bottom: 4px double var(--ink); margin: 0 5% 50px 5%; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0; font-weight: 900; }
         
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
-        article { margin-bottom: 80px; animation: fadeInUp 0.6s ease-out; }
-        .tag { color: var(--accent); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2.5px; }
-        h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 10px 0; }
+        .container { max-width: 720px; margin: 0 auto; padding: 0 20px; min-height: 100vh; }
+        article { margin-bottom: 120px; animation: fadeInUp 0.8s ease-out; }
+        .tag { color: var(--accent); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 15px; display: block; }
+        h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; line-height: 1.1; margin: 10px 0 25px 0; font-weight: 700; }
+        .meta { font-size: 0.85rem; color: #777; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
 
-        /* FIXED 300x250 AD STYLING */
-        .ad-wrapper {
+        /* POPUP AD STYLING (300x250) */
+        .popup-ad {
+            position: fixed;
             width: 300px;
             height: 250px;
-            margin: 40px auto 80px auto;
-            border: 2px solid #ff0000;
-            background: #fff;
-            position: relative;
-            overflow: hidden;
+            background: white;
+            border: 5px solid #ff0000;
+            box-shadow: 15px 15px 0px rgba(0,0,0,0.3);
+            z-index: 9999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            box-shadow: 5px 5px 0px rgba(255,0,0,0.1);
+            padding: 20px;
+            animation: popIn 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .ad-wrapper h3 { color: #ff0000; font-size: 1.1rem; margin: 10px; font-family: sans-serif; line-height: 1.2; }
-        .ad-wrapper p { font-size: 0.8rem; margin: 5px 15px; font-weight: bold; }
-        .ad-btn { 
-            background: #00ff00; 
-            padding: 8px 15px; 
-            font-size: 0.8rem; 
-            font-weight: 900; 
-            color: #000; 
-            text-decoration: none; 
-            border: 1px solid #000;
-            margin-top: 10px;
-        }
-        .ad-label { position: absolute; top: 0; right: 0; background: #eee; font-size: 0.5rem; padding: 2px 5px; color: #666; }
-
-        #sentinel { height: 100px; display: flex; align-items: center; justify-content: center; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .ad-title { color: red; font-weight: 900; font-size: 1.3rem; margin: 0; text-transform: uppercase; }
+        .ad-btn { background: #00ff00; color: black; padding: 12px; text-decoration: none; font-weight: 900; border: 3px solid black; width: 90%; margin-top: 15px; display: block; }
+        .close-x { position: absolute; top: 5px; right: 10px; font-weight: bold; cursor: pointer; color: #999; font-family: sans-serif; }
+        
+        #sentinel { height: 150px; display: flex; align-items: center; justify-content: center; }
+        .spinner { width: 30px; height: 30px; border: 3px solid #ddd; border-top-color: var(--ink); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<nav><div class="logo">Meridian.</div></nav>
+<nav>
+    <div class="logo">Meridian.</div>
+    <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase;">Archive Retrieval System</div>
+</nav>
 
 <header>
     <h1>The Archive.</h1>
-    <p>Persistent Retrieval Model v.4.0</p>
+    <p>A persistent study of culture and technology.</p>
 </header>
 
 <div class="container">
@@ -68,48 +67,71 @@
         <article>
             <span class="tag">Philosophy</span>
             <h2>The Weight of Infinite Choice</h2>
-            <p>In a world of absolute data accessibility, the most radical act is limitation. We explore why the "unplugged" movement is gaining traction...</p>
+            <div class="meta">By Julian Vane | Jan 30, 2026</div>
+            <p>In a world of absolute data accessibility, the most radical act is limitation. We explore why the "unplugged" movement is gaining traction among those who build the very networks we seek to escape. The more we optimize, the less we experience of the actual world...</p>
         </article>
     </div>
 
-    <div id="sentinel"></div>
+    <div id="sentinel">
+        <div class="spinner"></div>
+    </div>
 </div>
 
 <script>
-    const list = document.getElementById('posts-list');
-    const sentinel = document.getElementById('sentinel');
-    let cycle = 0;
-
-    const annoyAds = [
-        { h: "YOU ARE THE 1,000,000th VISITOR!", p: "Click to claim your $1,000 Amazon Gift Card NOW!", b: "CLAIM NOW", l: "https://www.amazon.com" },
-        { h: "HOT SINGLES NEAR YOU", p: "They are waiting for your message. Don't be shy!", b: "START CHAT", l: "https://www.tinder.com" },
-        { h: "LOSE 50 LBS FAST", p: "Doctors HATE this one weird trick! Watch the video.", b: "WATCH VIDEO", l: "https://www.youtube.com" },
-        { h: "CLEAN YOUR PC NOW", p: "Warning: 14 Viruses detected. System compromised!", b: "CLEAN NOW", l: "https://www.malwarebytes.com" }
+    const rickroll = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+    const adContent = [
+        { h: "URGENT ALERT!", p: "Your system has been flagged for 14 critical errors." },
+        { h: "WINNER!", p: "You are our 1,000,000th visitor today! Claim your $500 gift card." },
+        { h: "SECURITY RISK", p: "Unauthorized access detected from a remote location. Secure your data." },
+        { h: "FREE UPGRADE", p: "Your account is eligible for a premium loyalty reward." }
     ];
 
-    function inject() {
-        cycle++;
-        if (cycle % 3 === 0) {
-            const data = annoyAds[Math.floor(Math.random() * annoyAds.length)];
-            const div = document.createElement('div');
-            div.className = "ad-wrapper";
-            div.innerHTML = `
-                <div class="ad-label">ADVERTISEMENT</div>
-                <h3>${data.h}</h3>
-                <p>${data.p}</p>
-                <a href="${data.l}" target="_blank" class="ad-btn">${data.b}</a>
-            `;
-            list.appendChild(div);
-        } else {
-            const art = document.createElement('article');
-            art.innerHTML = `<span class="tag">System Retrieval</span><h2>Archived Entry #${Math.floor(Math.random()*9000)}</h2><p>This retrieved data fragment examines the cultural shift of the late 21st century. The focus remains on the intersection of solitude and high-speed networking...</p>`;
-            list.appendChild(art);
-        }
+    // 1. POPUP SYSTEM
+    function createPopup() {
+        const ad = adContent[Math.floor(Math.random() * adContent.length)];
+        const div = document.createElement('div');
+        div.className = 'popup-ad';
+        
+        const top = Math.random() * (window.innerHeight - 250);
+        const left = Math.random() * (window.innerWidth - 300);
+        div.style.top = top + "px";
+        div.style.left = left + "px";
+
+        div.innerHTML = `
+            <div class="close-x" onclick="this.parentElement.remove()">[X]</div>
+            <h3 class="ad-title">${ad.h}</h3>
+            <p style="font-weight:bold; margin: 10px 0;">${ad.p}</p>
+            <a href="${rickroll}" target="_blank" class="ad-btn">RESOLVE NOW</a>
+        `;
+        document.body.appendChild(div);
+        setTimeout(() => { if(div) div.remove(); }, 10000); // Auto-cleanup
+    }
+
+    setInterval(createPopup, 3000); // Spawn every 3 seconds
+
+    // 2. INFINITE BLOG SYSTEM
+    const list = document.getElementById('posts-list');
+    const sentinel = document.getElementById('sentinel');
+    const topics = ["Digital Fatigue", "Urban Echoes", "Material Memory", "Silent Networks", "The Algorithm"];
+    const authors = ["Julian Vane", "Elias Thorne", "Sarah Chen", "Marcus G."];
+
+    function generatePost() {
+        const art = document.createElement('article');
+        const topic = topics[Math.floor(Math.random() * topics.length)];
+        art.innerHTML = `
+            <span class="tag">System Retrieval</span>
+            <h2>Notes on ${topic}</h2>
+            <div class="meta">By ${authors[Math.floor(Math.random() * authors.length)]} | Internal Archive</div>
+            <p>This retrieved entry examines how the shift toward ${topic} has fundamentally altered the way we interact with physical spaces. Systematic observation suggests that the intersection of technology and human behavior creates a feedback loop that is difficult to break...</p>
+        `;
+        list.appendChild(art);
     }
 
     const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            for(let i=0; i<3; i++) inject();
+        if (entries.isIntersecting) {
+            setTimeout(() => {
+                for(let i=0; i<2; i++) generatePost();
+            }, 500);
         }
     }, { rootMargin: '200px' });
 
