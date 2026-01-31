@@ -1,2 +1,2 @@
 # Blog2
-Blogg
+Blog:https://idkwhattoputherebecauseiamdev.github.io/Blog2/
