@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Meridian | Journal of Modern Intent</title>
-    <!-- Premium Google Fonts Pairing -->
+    
+    <!-- External Auto-Tag Script -->
+    <script type="text/javascript">
+        aclib.runAutoTag({
+            zoneId: '0n5ys5u958',
+        });
+    </script>
+
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
         :root {
@@ -16,23 +23,22 @@
         * { box-sizing: border-box; }
         body { background-color: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; margin: 0; line-height: 1.8; }
         
-        /* Navigation & Branding */
         nav { padding: 1.5rem 5%; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--paper); position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; }
+        
         header { text-align: center; padding: 100px 20px; border-bottom: 4px double var(--ink); margin: 0 5%; }
         header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0; font-weight: 900; line-height: 1; }
         header p { color: #666; margin-top: 1rem; font-style: italic; }
 
-        /* Blog Layout */
         .container { max-width: 720px; margin: 0 auto; padding: 60px 20px; }
         article { margin-bottom: 120px; animation: fadeInUp 0.8s ease-out; }
         .tag { color: var(--accent); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 15px; display: block; }
         h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; line-height: 1.1; margin: 10px 0 25px 0; font-weight: 700; }
         .meta { font-size: 0.85rem; color: #777; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         
-        /* Interactive Elements */
         #sentinel { height: 100px; display: flex; align-items: center; justify-content: center; }
         .spinner { width: 30px; height: 30px; border: 2px solid #ddd; border-top-color: var(--ink); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -50,8 +56,8 @@
 </header>
 
 <div class="container">
-    <!-- Static First Posts -->
     <div id="posts-list">
+        <!-- Initial Entry -->
         <article>
             <span class="tag">Philosophy</span>
             <h2>The Weight of Infinite Choice</h2>
@@ -60,7 +66,7 @@
         </article>
     </div>
 
-    <!-- Observer Sentinel -->
+    <!-- Infinite Scroll Trigger -->
     <div id="sentinel">
         <div class="spinner"></div>
     </div>
@@ -70,7 +76,6 @@
     const list = document.getElementById('posts-list');
     const sentinel = document.getElementById('sentinel');
     
-    // Content Generation Arrays
     const tags = ["Logic", "Urbanism", "Digital Ethics", "Design", "History", "Living"];
     const authors = ["Julian Vane", "Elias Thorne", "Sarah Chen", "Marcus G."];
     const prefix = ["The Future of ", "Rethinking ", "A Critique of ", "Notes on ", "The End of "];
@@ -86,16 +91,14 @@
             <span class="tag">${tag}</span>
             <h2>${title}</h2>
             <div class="meta">By ${author} | Internal Archive Retrieval</div>
-            <p>In this newly retrieved entry, we examine how the shift toward ${subjects[Math.floor(Math.random() * subjects.length)]} has fundamentally altered the way we interact with physical spaces. The convergence of these two ideas suggests a broader cultural fatigue...</p>
+            <p>This retrieved entry examines how the shift toward ${subjects[Math.floor(Math.random() * subjects.length)]} has fundamentally altered the way we interact with physical spaces. The convergence of these two ideas suggests a broader cultural fatigue...</p>
             <p style="color: #888; font-style: italic;">Continue reading in the full ledger.</p>
         `;
         list.appendChild(article);
     }
 
-    // Infinite Scroll Implementation
     const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            // Simulate server delay for realism
+        if (entries.isIntersecting) {
             setTimeout(() => {
                 for(let i=0; i < 3; i++) generateRandomPost();
             }, 600);
